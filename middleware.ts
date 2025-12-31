@@ -10,21 +10,19 @@ import { NextResponse, type NextRequest } from 'next/server'
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
   
-  // Log middleware execution in development
-  if (process.env.NODE_ENV === 'development') {
-    console.log(`[Middleware] ${request.method} ${pathname}`)
-  }
+  // Log middleware execution - ALWAYS log
+  console.log(`🔒 [Middleware] ${request.method} ${pathname}`)
 
   let supabaseResponse = NextResponse.next({
     request,
   })
 
-  // Check environment variables
+  // Check environment variables - ALWAYS log errors
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
-    console.error('[Middleware] Missing NEXT_PUBLIC_SUPABASE_URL')
+    console.error('❌ [Middleware] Missing NEXT_PUBLIC_SUPABASE_URL')
   }
   if (!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-    console.error('[Middleware] Missing NEXT_PUBLIC_SUPABASE_ANON_KEY')
+    console.error('❌ [Middleware] Missing NEXT_PUBLIC_SUPABASE_ANON_KEY')
   }
 
   const supabase = createServerClient(
@@ -55,23 +53,19 @@ export async function middleware(request: NextRequest) {
     error: authError,
   } = await supabase.auth.getUser()
 
-  if (authError && process.env.NODE_ENV === 'development') {
-    console.error('[Middleware] Auth error:', authError.message)
+  if (authError) {
+    console.error('❌ [Middleware] Auth error:', authError.message)
   }
 
   // Allow login page without authentication
   if (pathname.startsWith('/login')) {
-    if (process.env.NODE_ENV === 'development') {
-      console.log('[Middleware] Allowing login page access')
-    }
+    console.log('✅ [Middleware] Allowing login page access')
     return supabaseResponse
   }
 
   // Protect all other routes - require authentication
   if (!user) {
-    if (process.env.NODE_ENV === 'development') {
-      console.log('[Middleware] No user, redirecting to login')
-    }
+    console.log('🔐 [Middleware] No user, redirecting to login')
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     url.searchParams.set('redirect', pathname)
@@ -80,9 +74,7 @@ export async function middleware(request: NextRequest) {
 
   // For /add-content routes, verify admin access
   if (pathname.startsWith('/add-content')) {
-    if (process.env.NODE_ENV === 'development') {
-      console.log(`[Middleware] Checking admin access for user: ${user.id}`)
-    }
+    console.log(`🔍 [Middleware] Checking admin access for user: ${user.id}`)
     
     const { data: adminUser, error } = await supabase
       .from('admin_users')
@@ -92,23 +84,19 @@ export async function middleware(request: NextRequest) {
       .single()
 
     if (error) {
-      console.error('[Middleware] Admin check error:', error.message)
+      console.error('❌ [Middleware] Admin check error:', error.message)
     }
 
     if (error || !adminUser) {
       // User is authenticated but not an admin
-      if (process.env.NODE_ENV === 'development') {
-        console.warn('[Middleware] User is not an admin, redirecting')
-      }
+      console.warn('⚠️ [Middleware] User is not an admin, redirecting')
       const url = request.nextUrl.clone()
       url.pathname = '/login'
       url.searchParams.set('error', 'unauthorized')
       return NextResponse.redirect(url)
     }
 
-    if (process.env.NODE_ENV === 'development') {
-      console.log('[Middleware] Admin access granted')
-    }
+    console.log('✅ [Middleware] Admin access granted for:', adminUser.email)
   }
 
   return supabaseResponse
