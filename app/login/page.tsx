@@ -6,6 +6,7 @@ import { createClient } from '@/lib/supabase/client'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState, Suspense } from 'react'
 import Image from 'next/image'
+import { getStorageUrl } from '@/lib/supabase/storage-url'
 
 function LoginContent() {
   const router = useRouter()
@@ -204,7 +205,7 @@ function LoginContent() {
         <div className="mb-10 text-center">
           <div className="flex justify-center mb-4">
             <Image
-              src="/images/quoupl.svg"
+              src={getStorageUrl('brand-assets', 'brand-logo/quoupl.svg') || '/images/quoupl.svg'}
               alt="qoupl"
               width={120}
               height={40}
