@@ -21,7 +21,7 @@ import {
 import { useTheme } from 'next-themes'
 import { CMSThemeToggle } from './cms-theme-toggle'
 import { createClient } from '@/lib/supabase/client'
-import { getStorageUrl } from '@/lib/supabase/storage-url'
+import { getLogoUrl } from '@/lib/utils/logo-url'
 import type { User } from '@supabase/supabase-js'
 import type { AdminUser } from '@/lib/supabase/types'
 
@@ -185,7 +185,7 @@ export default function CMSNav({ user, adminUser }: CMSNavProps) {
           <Link href="/add-content" className="flex items-center gap-2">
             <div className="relative h-7 w-auto">
               <Image
-                src={getStorageUrl('brand-assets', 'brand-logo/quoupl.svg') || '/images/quoupl.svg'}
+                src={getLogoUrl()}
                 alt="qoupl logo"
                 width={80}
                 height={28}
@@ -199,7 +199,7 @@ export default function CMSNav({ user, adminUser }: CMSNavProps) {
           <Link href="/add-content" className="flex items-center justify-center w-full">
             <div className="relative h-7 w-7">
               <Image
-                src={getStorageUrl('brand-assets', 'brand-logo/quoupl.svg') || '/images/quoupl.svg'}
+                src={getLogoUrl()}
                 alt="qoupl logo"
                 width={28}
                 height={28}

@@ -202,17 +202,23 @@ export default function GlobalContentEditor({
   }, [existingContent, contentKey])
 
   function getDefaultContent(key: string): any {
+    // Get logo from Supabase Storage
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const defaultLogo = supabaseUrl 
+      ? `${supabaseUrl}/storage/v1/object/public/brand-assets/brand-logo/quoupl.svg`
+      : '/images/quoupl.svg'
+    
     switch (key) {
       case 'navbar':
         return {
           links: [{ href: '/', label: 'Home' }],
-          logo: { src: '/images/quoupl.svg', alt: 'qoupl', width: 120, height: 40 },
+          logo: { src: defaultLogo, alt: 'qoupl', width: 120, height: 40 },
         }
       case 'footer':
         return {
           brand: {
             description: '',
-            logo: { src: '/images/quoupl.svg', alt: 'qoupl', width: 120, height: 40 },
+            logo: { src: defaultLogo, alt: 'qoupl', width: 120, height: 40 },
           },
           columns: {
             product: { title: 'Product', links: [] },
