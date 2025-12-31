@@ -30,10 +30,11 @@ Visit http://localhost:3000
 
 ## 📚 Documentation
 
-- **[COMPLETE_SETUP.md](./COMPLETE_SETUP.md)** - Complete setup guide (START HERE!)
-- **[CONNECT_TO_WEBSITE.md](./CONNECT_TO_WEBSITE.md)** - How CMS connects to website
-- **[DEPLOYMENT.md](./DEPLOYMENT.md)** - Complete deployment guide for Vercel
-- **[PUSH_TO_GITHUB.md](./PUSH_TO_GITHUB.md)** - How to push to GitHub
+- **[VERIFY_SETUP.md](./VERIFY_SETUP.md)** - Pre-deployment checklist
+- **[DEPLOYMENT.md](./DEPLOYMENT.md)** - Complete deployment guide
+- **[CONNECTION_GUIDE.md](./CONNECTION_GUIDE.md)** - How CMS connects to website
+- **[LOGGING_GUIDE.md](./LOGGING_GUIDE.md)** - How to see logs
+- **[TEST_LOGGING.md](./TEST_LOGGING.md)** - Test logging setup
 
 ## 🔗 How It Connects to Website
 
@@ -70,6 +71,7 @@ CMS (cms.qoupl.ai)  ──┐
 - ✅ Media library
 - ✅ Content history tracking
 - ✅ Admin authentication
+- ✅ Comprehensive logging
 
 ## 🔒 Security
 
@@ -90,7 +92,8 @@ CMS (cms.qoupl.ai)  ──┐
 │   └── ui/             # UI components
 ├── lib/
 │   ├── auth/           # Admin authentication
-│   └── supabase/       # Supabase clients
+│   ├── supabase/       # Supabase clients
+│   └── validation/     # Validation schemas
 └── middleware.ts        # Route protection
 ```
 
@@ -98,19 +101,29 @@ CMS (cms.qoupl.ai)  ──┐
 
 ### Step 1: Push to GitHub
 
-1. Create repository on GitHub: `qoupl-ai/qoupl-website-cms`
-2. Push code:
-   ```bash
-   git push -u origin main
-   ```
+```bash
+git push origin main
+```
 
 ### Step 2: Deploy to Vercel
 
 1. Import project from GitHub
-2. Set environment variables (see DEPLOYMENT.md)
+2. Set environment variables
 3. Deploy!
 
-See **[COMPLETE_SETUP.md](./COMPLETE_SETUP.md)** for detailed instructions.
+See **[DEPLOYMENT.md](./DEPLOYMENT.md)** for detailed instructions.
+
+## ✅ Pre-Deployment Checklist
+
+Before deploying, verify:
+
+- [ ] All dependencies installed (`npm install`)
+- [ ] Environment variables set (`.env.local`)
+- [ ] Build succeeds (`npm run build`)
+- [ ] Dev server runs (`npm run dev`)
+- [ ] Can login to CMS
+- [ ] Can create/edit content
+- [ ] Logs appear in terminal and browser console
 
 ## 📝 License
 

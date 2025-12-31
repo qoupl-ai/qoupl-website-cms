@@ -5,7 +5,11 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 
 export default async function CMSDashboard() {
+  console.log('[CMS Dashboard] Loading dashboard')
+  
   const supabase = await createClient()
+
+  console.log('[CMS Dashboard] Fetching content counts')
 
   // Get counts for all content types
   const [

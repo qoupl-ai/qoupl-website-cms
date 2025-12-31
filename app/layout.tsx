@@ -3,6 +3,17 @@ import { Poppins, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 
+// Log on server startup
+if (typeof window === 'undefined') {
+  console.log('='.repeat(50))
+  console.log('[CMS] Server starting...')
+  console.log('[CMS] NODE_ENV:', process.env.NODE_ENV)
+  console.log('[CMS] Supabase URL:', process.env.NEXT_PUBLIC_SUPABASE_URL ? 'Set ✓' : 'Missing ✗')
+  console.log('[CMS] Supabase Anon Key:', process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ? 'Set ✓' : 'Missing ✗')
+  console.log('[CMS] Service Role Key:', process.env.SUPABASE_SERVICE_ROLE_KEY ? 'Set ✓' : 'Missing ✗')
+  console.log('='.repeat(50))
+}
+
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800"],
@@ -47,4 +58,3 @@ export default function RootLayout({
     </html>
   );
 }
-
