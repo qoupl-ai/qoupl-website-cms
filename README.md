@@ -30,14 +30,14 @@ Visit http://localhost:3000
 
 ## 📚 Documentation
 
+- **[COMPLETE_SETUP.md](./COMPLETE_SETUP.md)** - Complete setup guide (START HERE!)
+- **[CONNECT_TO_WEBSITE.md](./CONNECT_TO_WEBSITE.md)** - How CMS connects to website
 - **[DEPLOYMENT.md](./DEPLOYMENT.md)** - Complete deployment guide for Vercel
-- **[CONNECTION_GUIDE.md](./CONNECTION_GUIDE.md)** - How CMS connects to website
-- **[QUICK_DEPLOY.md](./QUICK_DEPLOY.md)** - Quick 5-minute deploy guide
-- **[SETUP_GITHUB.md](./SETUP_GITHUB.md)** - GitHub repository setup
+- **[PUSH_TO_GITHUB.md](./PUSH_TO_GITHUB.md)** - How to push to GitHub
 
-## 🔗 How It Works
+## 🔗 How It Connects to Website
 
-This CMS connects to the same Supabase database as your website:
+This CMS connects to the **same Supabase database** as your website:
 
 ```
 CMS (cms.qoupl.ai)  ──┐
@@ -45,6 +45,7 @@ CMS (cms.qoupl.ai)  ──┐
                       └──>  (Shared database)
 ```
 
+**How it works:**
 - **CMS writes** data using service role key
 - **Website reads** data using anon key
 - **No API needed** - direct database connection
@@ -95,13 +96,21 @@ CMS (cms.qoupl.ai)  ──┐
 
 ## 🚢 Deployment
 
-See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed Vercel deployment instructions.
+### Step 1: Push to GitHub
 
-Quick version:
-1. Push to GitHub
-2. Import to Vercel
-3. Set environment variables
-4. Deploy!
+1. Create repository on GitHub: `qoupl-ai/qoupl-website-cms`
+2. Push code:
+   ```bash
+   git push -u origin main
+   ```
+
+### Step 2: Deploy to Vercel
+
+1. Import project from GitHub
+2. Set environment variables (see DEPLOYMENT.md)
+3. Deploy!
+
+See **[COMPLETE_SETUP.md](./COMPLETE_SETUP.md)** for detailed instructions.
 
 ## 📝 License
 
