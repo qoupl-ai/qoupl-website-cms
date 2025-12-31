@@ -14,6 +14,12 @@ function LoginContent() {
   const redirect = searchParams.get('redirect') || '/add-content'
   const supabase = createClient()
   const [loading, setLoading] = useState(true)
+  
+  // Get logo URL and log it
+  const logoUrl = getLogoUrl()
+  useEffect(() => {
+    console.log('🖼️ [Login] Logo URL:', logoUrl)
+  }, [logoUrl])
 
   useEffect(() => {
     // Check if user is already logged in
@@ -205,13 +211,24 @@ function LoginContent() {
         <div className="mb-10 text-center">
           <div className="flex justify-center mb-4">
             <Image
-              src={getLogoUrl()}
+              src={logoUrl}
               alt="qoupl"
               width={120}
               height={40}
               className="h-10 w-auto"
               style={{ filter: 'brightness(0) invert(1)' }}
               priority
+              onError={(e) => {
+                console.error('❌ [Login] Failed to load logo:', logoUrl)
+                console.error('❌ [Login] Error:', e)
+                // Fallback to local if Supabase fails
+                if (logoUrl.includes('supabase')) {
+                  (e.target as HTMLImageElement).src = '/images/quoupl.svg'
+                }
+              }}
+              onLoad={() => {
+                console.log('✅ [Login] Logo loaded successfully:', logoUrl)
+              }}
             />
           </div>
           <p style={{ color: '#898989', fontSize: '14px', fontWeight: '500' }}>

@@ -205,7 +205,7 @@ export default function GlobalContentEditor({
     // Get logo from Supabase Storage
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
     const defaultLogo = supabaseUrl 
-      ? `${supabaseUrl}/storage/v1/object/public/brand-assets/brand-logo/quoupl.svg`
+      ? `${supabaseUrl}/storage/v1/object/public/brand-assets/quoupl.svg`
       : '/images/quoupl.svg'
     
     switch (key) {
