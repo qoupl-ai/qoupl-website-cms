@@ -17,11 +17,18 @@ import { createClient } from '@supabase/supabase-js'
  */
 
 if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
+  console.error('[Supabase Admin] Missing NEXT_PUBLIC_SUPABASE_URL environment variable')
   throw new Error('Missing NEXT_PUBLIC_SUPABASE_URL environment variable')
 }
 
 if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+  console.error('[Supabase Admin] Missing SUPABASE_SERVICE_ROLE_KEY environment variable')
   throw new Error('Missing SUPABASE_SERVICE_ROLE_KEY environment variable')
+}
+
+// Log successful initialization in development
+if (process.env.NODE_ENV === 'development') {
+  console.log('[Supabase Admin] Admin client initialized successfully')
 }
 
 export const adminClient = createClient(

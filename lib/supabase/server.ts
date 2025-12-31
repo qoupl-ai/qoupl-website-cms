@@ -2,6 +2,16 @@ import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 
 export async function createClient() {
+  // Log in development
+  if (process.env.NODE_ENV === 'development') {
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
+      console.error('[Supabase Server] Missing NEXT_PUBLIC_SUPABASE_URL')
+    }
+    if (!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+      console.error('[Supabase Server] Missing NEXT_PUBLIC_SUPABASE_ANON_KEY')
+    }
+  }
+
   const cookieStore = await cookies()
 
   return createServerClient(
@@ -17,9 +27,12 @@ export async function createClient() {
             cookiesToSet.forEach(({ name, value, options }) =>
               cookieStore.set(name, value, options)
             )
-          } catch {
+          } catch (error) {
             // The `setAll` method was called from a Server Component.
             // This can be ignored if you have middleware refreshing user sessions.
+            if (process.env.NODE_ENV === 'development') {
+              console.warn('[Supabase Server] Cookie set error (can be ignored):', error)
+            }
           }
         },
       },
